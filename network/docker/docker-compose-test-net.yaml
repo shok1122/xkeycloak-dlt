@@ -11,7 +11,8 @@ volumes:
   peer0.org2.xkeycloak.com:
 
 networks:
-  test:
+  default:
+    name: xkeycloak_net
 
 services:
 
@@ -45,8 +46,6 @@ services:
         - orderer.xkeycloak.com:/var/hyperledger/production/orderer
     ports:
       - 7050:7050
-    networks:
-      - test
 
   peer0.org1.xkeycloak.com:
     container_name: peer0.org1.xkeycloak.com
@@ -85,8 +84,34 @@ services:
     command: peer node start
     ports:
       - 7051:7051
-    networks:
-      - test
+
+  cli:
+    container_name: cli
+    image: hyperledger/fabric-tools
+    tty: true
+    stdin_open: true
+    environment:
+      - GOPATH=/opt/gopath
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - FABRIC_LOGGING_SPEC=INFO
+      #- FABRIC_LOGGING_SPEC=DEBUG
+      - CORE_PEER_ID=cli
+      - CORE_PEER_ADDRESS=peer0.org1.xkeycloak.com:7051
+      - CORE_PEER_LOCALMSPID=Org1MSP
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/organizations/peerOrganizations/org1.xkeycloak.com/peers/peer0.org1.xkeycloak.com/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/organizations/peerOrganizations/org1.xkeycloak.com/peers/peer0.org1.xkeycloak.com/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/organizations/peerOrganizations/org1.xkeycloak.com/peers/peer0.org1.xkeycloak.com/tls/ca.crt
+      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/organizations/peerOrganizations/org1.xkeycloak.com/users/Admin@org1.xkeycloak.com/msp
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: /bin/bash
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../../chaincode/:/opt/gopath/src/github.com/chaincode
+        - ../organizations:/opt/gopath/src/github.com/hyperledger/fabric/peer/organizations
+        - ../scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
+    depends_on:
+      - peer0.org1.xkeycloak.com
 
   peer0.org2.xkeycloak.com:
     container_name: peer0.org2.xkeycloak.com
@@ -125,5 +150,4 @@ services:
     command: peer node start
     ports:
       - 9051:9051
-    networks:
-      - test
+
