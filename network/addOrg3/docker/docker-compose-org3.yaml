@@ -9,7 +9,8 @@ volumes:
   peer0.org3.xkeycloak.com:
 
 networks:
-  test:
+  default:
+    name: xkeycloak_net
 
 services:
 
@@ -50,8 +51,6 @@ services:
     command: peer node start
     ports:
       - 11051:11051
-    networks:
-      - test
 
   Org3cli:
     container_name: Org3cli
@@ -80,5 +79,4 @@ services:
         - ../../scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
     depends_on:
       - peer0.org3.xkeycloak.com
-    networks:
-      - test
+
