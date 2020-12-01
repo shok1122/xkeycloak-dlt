@@ -43,7 +43,13 @@ services:
         - ../system-genesis-block/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
         - ../organizations/ordererOrganizations/xkeycloak.com/orderers/orderer.xkeycloak.com/msp:/var/hyperledger/orderer/msp
         - ../organizations/ordererOrganizations/xkeycloak.com/orderers/orderer.xkeycloak.com/tls/:/var/hyperledger/orderer/tls
+        - ../asset/orderer/orderer.yaml:/etc/hyperledger/fabric/orderer.yaml
         - orderer.xkeycloak.com:/var/hyperledger/production/orderer
+    extra_hosts:
+      - "orderer.xkeycloak.com:192.168.122.58"
+      - "peer0.org1.xkeycloak.com:192.168.122.58"
+      - "peer0.org2.xkeycloak.com:192.168.122.58"
+      - "peer0.org3.xkeycloak.com:192.168.122.76"
     ports:
       - 7050:7050
 
@@ -82,6 +88,11 @@ services:
         - peer0.org1.xkeycloak.com:/var/hyperledger/production
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: peer node start
+    extra_hosts:
+      - "orderer.xkeycloak.com:192.168.122.58"
+      - "peer0.org1.xkeycloak.com:192.168.122.58"
+      - "peer0.org2.xkeycloak.com:192.168.122.58"
+      - "peer0.org3.xkeycloak.com:192.168.122.76"
     ports:
       - 7051:7051
 
@@ -110,6 +121,11 @@ services:
         - ../../chaincode/:/opt/gopath/src/github.com/chaincode
         - ../organizations:/opt/gopath/src/github.com/hyperledger/fabric/peer/organizations
         - ../scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
+    extra_hosts:
+      - "orderer.xkeycloak.com:192.168.122.58"
+      - "peer0.org1.xkeycloak.com:192.168.122.58"
+      - "peer0.org2.xkeycloak.com:192.168.122.58"
+      - "peer0.org3.xkeycloak.com:192.168.122.76"
     depends_on:
       - peer0.org1.xkeycloak.com
 
@@ -148,6 +164,11 @@ services:
         - peer0.org2.xkeycloak.com:/var/hyperledger/production
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: peer node start
+    extra_hosts:
+      - "orderer.xkeycloak.com:192.168.122.58"
+      - "peer0.org1.xkeycloak.com:192.168.122.58"
+      - "peer0.org2.xkeycloak.com:192.168.122.58"
+      - "peer0.org3.xkeycloak.com:192.168.122.76"
     ports:
       - 9051:9051
 
