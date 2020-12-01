@@ -32,18 +32,18 @@ setGlobals() {
     export CORE_PEER_LOCALMSPID="Org1MSP"
     export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_ORG1_CA
     export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/org1.xkeycloak.com/users/Admin@org1.xkeycloak.com/msp
-    export CORE_PEER_ADDRESS=localhost:7051
+    export CORE_PEER_ADDRESS=peer0.org1.xkeycloak.com:7051
   elif [ $USING_ORG -eq 2 ]; then
     export CORE_PEER_LOCALMSPID="Org2MSP"
     export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_ORG2_CA
     export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/org2.xkeycloak.com/users/Admin@org2.xkeycloak.com/msp
-    export CORE_PEER_ADDRESS=localhost:9051
+    export CORE_PEER_ADDRESS=peer0.org2.xkeycloak.com:9051
 
   elif [ $USING_ORG -eq 3 ]; then
     export CORE_PEER_LOCALMSPID="Org3MSP"
     export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_ORG3_CA
     export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/org3.xkeycloak.com/users/Admin@org3.xkeycloak.com/msp
-    export CORE_PEER_ADDRESS=localhost:11051
+    export CORE_PEER_ADDRESS=peer0.org3.xkeycloak.com:11051
   else
     echo "================== ERROR !!! ORG Unknown =================="
   fi
