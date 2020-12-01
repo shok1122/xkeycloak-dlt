@@ -1,0 +1,57 @@
+{
+	"name": "first-network",
+	"version": "1.0.0",
+	"client": {
+		"tlsEnable": true,
+		"adminCredential": {
+			"id": "exploreradmin",
+			"password": "exploreradminpw"
+		},
+		"enableAuthentication": false,
+		"organization": "Org1MSP",
+		"connection": {
+			"timeout": {
+				"peer": {
+					"endorser": "300"
+				},
+				"orderer": "300"
+			}
+		}
+	},
+	"channels": {
+		"mychannel": {
+			"peers": {
+				"peer0.org1.xkeycloak.com": {}
+			},
+			"connection": {
+				"timeout": {
+					"peer": {
+						"endorser": "6000",
+						"eventHub": "6000",
+						"eventReg": "6000"
+					}
+				}
+			}
+		}
+	},
+	"organizations": {
+		"Org1MSP": {
+			"mspid": "Org1MSP",
+			"adminPrivateKey": {
+				"path": "/tmp/crypto/peerOrganizations/org1.xkeycloak.com/users/Admin@org1.xkeycloak.com/msp/keystore/priv_sk"
+			},
+			"peers": ["peer0.org1.xkeycloak.com"],
+			"signedCert": {
+				"path": "/tmp/crypto/peerOrganizations/org1.xkeycloak.com/users/Admin@org1.xkeycloak.com/msp/signcerts/Admin@org1.xkeycloak.com-cert.pem"
+			}
+		}
+	},
+	"peers": {
+		"peer0.org1.xkeycloak.com": {
+			"tlsCACerts": {
+				"path": "/tmp/crypto/peerOrganizations/org1.xkeycloak.com/peers/peer0.org1.xkeycloak.com/tls/ca.crt"
+			},
+			"url": "grpcs://peer0.org1.xkeycloak.com:7051"
+		}
+	}
+}
